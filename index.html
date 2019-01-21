@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>grid test</title>
+    <style type="text/css" media="all">
+      .y { color: #080; }
+      .n { color: #c00; }
+
+      /* CSS test */
+      .grid-supported { display: none; } /* assume no support */
+      @supports (display: grid) {
+        /* toggle (not) support messages if it is supported */
+        .grid-supported { display: inline; }
+        .grid-not-supported { display: none; }
+      }
+
+      /* sample 2x grid */
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 0.5em;
+      }
+      .grid > div {
+        background-color: #ccc;
+        text-align: center;
+        font-size: 1.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <h1>JavaScript 'display: grid' Support Detection</h1>
+      <div class="grid">
+        <p><strong>JavaScript test:</strong> <span id="supports"></span></p>
+        <p><strong>CSS test:</strong>
+          <span class="grid-supported y">Grid is supported</span>
+          <span class="grid-not-supported n">Grid is not supported</span>
+        </p>
+      </div>
+      <p>To actually <a href="http://caniuse.com/#search=grid">utilize Grid</a>, check out <a href="http://gridbyexample.com/">Grid By Example</a> and <a href="https://hacks.mozilla.org/2016/08/using-feature-queries-in-css/">use @supports</a> with your implementation. But if you need to know if Grid works in your visitors' browser with Javascript, such as for analytics, the test on this page may work for you.</p>
+
+      <h2>Sample 2&times;2 Grid</h2>
+      <div class="grid">
+        <div>A</div>
+        <div>B</div>
+        <div>C</div>
+        <div>D</div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      // best practice: stay out of the global scope
+      !(function () {
+        // get the output bucket
+        var status = document.getElementById('supports');
+        // create a div (could also reuse a known element)
+        var el = document.createElement('div');
+        // detect support
+        var supports_grid = typeof el.style.grid === 'string';
+        // stylize yes/no output
+        var yes = '<span class="y">Grid is supported</span>';
+        var no = '<span class="n">Grid is not supported</span>';
+
+        // add the output to the bucket
+        status.innerHTML = supports_grid ? yes : no;
+      })();
+    </script>   
+  </body>
+</html>
